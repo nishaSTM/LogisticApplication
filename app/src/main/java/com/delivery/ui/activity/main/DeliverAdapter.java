@@ -49,20 +49,14 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-//                LogUtil.i(getClass().getName() + " Current page count  ", mContext.currentPage + "");
-
                 totalItemCount = linearLayoutManager != null ? linearLayoutManager.getItemCount() : 0;
                 lastVisibleItem = linearLayoutManager != null ? linearLayoutManager.findLastVisibleItemPosition() : 0;
 
                 if ((!loading && totalItemCount <= (lastVisibleItem + visibleThreshold))) {
-                    context.offset = totalItemCount;
-                    // if (context.isLoadedMore ) {
-
-                    context.onLoadMore(context.offset);
+                    context.onLoadMore(totalItemCount);
 
                     loading = true;
 
-                    //}
 
                 }
             }
@@ -93,7 +87,7 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
 
         holder.setOnClickListener(deliveryItemResponseModel);
         holder.setImage(deliveryItemResponseModel.getImage());
-        holder.setDescription(deliveryItemResponseModel.getId() + " " + deliveryItemResponseModel.getDescription() + " " + deliveryItemResponseModel.getLocation().getAddress());
+        holder.setDescription(deliveryItemResponseModel.getDescription() + " " + deliveryItemResponseModel.getLocation().getAddress());
     }
 
     @Override

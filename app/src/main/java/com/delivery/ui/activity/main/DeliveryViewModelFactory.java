@@ -14,9 +14,6 @@ class DeliveryViewModelFactory implements ViewModelProvider.Factory {
 
     private final DeliveryService deliveryService;
 
-  /*  public DeliveryViewModelFactory(DeliveryService deliveryService) {
-        this.deliveryService = deliveryService;
-    }*/
 
     public DeliveryViewModelFactory() {
         this.deliveryService = DataManager.getInstance().getDeliveryService();

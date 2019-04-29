@@ -1,17 +1,17 @@
 package com.delivery.ui.activity.main;
 
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
+
 
 import com.delivery.data.network.model.DeliveryItemResponseModel;
 import com.delivery.data.network.model.Result;
 import com.delivery.data.network.services.DeliveryService;
 import com.delivery.utils.AppConstants;
 
+
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
 
 import androidx.lifecycle.MutableLiveData;
@@ -76,35 +76,32 @@ public class DeliveryViewModel extends ViewModel {
         @Override
         public void onResponse(@NonNull Call<List<DeliveryItemResponseModel>> call, @NonNull Response<List<DeliveryItemResponseModel>> response) {
             List<DeliveryItemResponseModel> deliveryItemResponse = response.body();
-            Log.d("response success", "success" + deliveryItemResponse);
-            if (deliveryItemResponse != null) {
-                if (deliveryItemResponse.size() == 0) {
 
-                    setIsLoading(false);
 
-                } else {
+            if (deliveryItemResponse == null) {
+                result.setStatus(Result.STATUS.ERROR);
+                result.setError(AppConstants.CONNECTION_OFF);
+                result.setData(deliveryItemArrayList);
 
-                    deliveryItemArrayList.addAll(deliveryItemResponse);
-                    result.setStatus(Result.STATUS.SUCCESS);
-                    result.setData(deliveryItemArrayList);
-                    setDeliveries(result);
-                }
-            } else {
-
-                result.setStatus(Result.STATUS.SUCCESS);
-                result.setData(Collections.emptyList());
                 setDeliveries(result);
+            } else {
+                deliveryItemArrayList.addAll(deliveryItemResponse);
+                result.setStatus(Result.STATUS.SUCCESS);
+                result.setData(deliveryItemArrayList);
 
+                setDeliveries(result);
             }
+
         }
 
         @Override
 
         public void onFailure(@NonNull Call<List<DeliveryItemResponseModel>> call, @NonNull Throwable t) {
 
-            Log.d("response error", "error" + t.getMessage());
+
             result.setStatus(Result.STATUS.ERROR);
             result.setData(deliveryItemArrayList);
+
             result.setError(t.getMessage());
             setDeliveries(result);
 

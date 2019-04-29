@@ -35,7 +35,6 @@ import butterknife.OnClick;
 public class DeliveryActivity extends AppCompatActivity implements DeliverAdapter.OnDeliveryAdapter, OnLoadMoreListener {
 
 
-    public int offset = 0;
     private DeliverAdapter deliverAdapter;
 
     @BindView(R.id.recycler_view)
@@ -70,13 +69,14 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
         viewModel.getLoadingStatus().observe(this, new LoadingObserver());
         viewModel.getDeliveryList().observe(this, new DeliveryItemObserver());
 
-        loadingDataFromNetwork();
+        loadingDataFromNetwork(0);
 
         ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
         connectionLiveData.observe(this, connection -> {
             if (connection != null && connection.getIsConnected()) {
                 switch (connection.getType()) {
                     case 0:
+
                         deliverAdapter.setLoading();
 
                         break;
@@ -92,16 +92,16 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
     }
 
 
-    private void loadingDataFromNetwork() {
+    private void loadingDataFromNetwork(int offset) {
         viewModel.loadDeliveriesNetwork(offset);
     }
 
 
     @OnClick(R.id.btn_retry)
     void onEmptyViewButtonClick() {
-        offset = 0;
+        int offset = 0;
 
-        loadingDataFromNetwork();
+        loadingDataFromNetwork(offset);
     }
 
     @Override
@@ -114,10 +114,9 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
 
     @Override
     public void onLoadMore(int offset) {
-        //if(isLoadedMore) {
-        Log.d("request offset", offset + "==");
+
         viewModel.loadDeliveriesNetwork(offset);
-        //}
+
     }
 
 
@@ -140,20 +139,27 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
 
         @Override
         public void onChanged(@Nullable Result deliveryResult) {
-            if (deliveryResult != null && deliveryResult.getStatus() == Result.STATUS.ERROR) {
-                if (deliveryResult.getData() != null && deliveryResult.getData().size() > 0) {
-                    Toast.makeText(DeliveryActivity.this, deliveryResult.getError(), Toast.LENGTH_SHORT).show();
-                } else {
-                    emptyView.setVisibility(View.VISIBLE);
-                    Toast.makeText(DeliveryActivity.this, deliveryResult.getError(), Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                deliverAdapter.setItems(deliveryResult.getData());
-                deliverAdapter.setLoading();
-                if (deliveryResult.getData().isEmpty()) {
+
+
+            if (deliveryResult.getStatus() == Result.STATUS.ERROR) {
+                if (deliveryResult.getData() == null || deliveryResult.getData().size() == 0) {
                     emptyView.setVisibility(View.VISIBLE);
                 } else {
                     emptyView.setVisibility(View.GONE);
+                    deliverAdapter.setItems(deliveryResult.getData());
+                    deliverAdapter.notifyDataSetChanged();
+                    deliverAdapter.setLoading();
+                    Toast.makeText(DeliveryActivity.this, deliveryResult.getError(), Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                if (deliveryResult.getData().size() == 0) {
+                    emptyView.setVisibility(View.VISIBLE);
+                } else {
+                    emptyView.setVisibility(View.GONE);
+                    deliverAdapter.setItems(deliveryResult.getData());
+                    deliverAdapter.notifyDataSetChanged();
+                    deliverAdapter.setLoading();
                 }
             }
         }
