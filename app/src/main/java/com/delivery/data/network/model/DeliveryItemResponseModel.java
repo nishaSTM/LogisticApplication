@@ -32,7 +32,6 @@ public class DeliveryItemResponseModel implements Parcelable {
     private String description;
 
 
-
     private String imageUrl;
 
     public String getId() {
@@ -57,7 +56,9 @@ public class DeliveryItemResponseModel implements Parcelable {
 
     private LocationCoordinatesResponseModel location;
 
-    public DeliveryItemResponseModel(){ }
+    public DeliveryItemResponseModel() {
+    }
+
     private DeliveryItemResponseModel(Parcel in) {
         description = in.readString();
         imageUrl = in.readString();

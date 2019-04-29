@@ -35,9 +35,6 @@ public class LocationCoordinatesResponseModel implements Parcelable {
     private String address;
 
 
-
-
-
     private LocationCoordinatesResponseModel(Parcel in) {
         lat = in.readFloat();
         lng = in.readFloat();

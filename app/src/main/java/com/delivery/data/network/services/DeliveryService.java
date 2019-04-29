@@ -1,8 +1,6 @@
 package com.delivery.data.network.services;
 
 
-
-
 import com.delivery.App;
 import com.delivery.data.network.model.DeliveryItemResponseModel;
 import com.delivery.utils.InternetUtil;
@@ -32,7 +30,6 @@ public class DeliveryService {
     private DeliveryApi mDeliveryApi;
 
 
-
     private static DeliveryService instance;
 
 
@@ -43,7 +40,6 @@ public class DeliveryService {
         }
         return instance;
     }
-
 
 
     private DeliveryService() {
@@ -85,7 +81,7 @@ public class DeliveryService {
                 .addInterceptor(REWRITE_RESPONSE_INTERCEPTOR_OFFLINE)
                 .build();
 
-       Retrofit mRetrofit = new Retrofit.Builder()
+        Retrofit mRetrofit = new Retrofit.Builder()
                 .baseUrl(URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
@@ -95,15 +91,15 @@ public class DeliveryService {
     }
 
 
-
     public DeliveryApi getDeliveryApi() {
         return mDeliveryApi;
     }
 
     public interface DeliveryApi {
 
-        @GET("deliveries/") Call<List<DeliveryItemResponseModel>> getAllDeliveryItems(@Query("offset") Integer offset,
-                                                                                      @Query("limit") Integer limit);
+        @GET("deliveries/")
+        Call<List<DeliveryItemResponseModel>> getAllDeliveryItems(@Query("offset") Integer offset,
+                                                                  @Query("limit") Integer limit);
     }
 
 }

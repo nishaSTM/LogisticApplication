@@ -1,7 +1,10 @@
 package com.delivery.ui.activity.main;
 
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
+
 import com.delivery.data.network.model.DeliveryItemResponseModel;
 import com.delivery.data.network.model.Result;
 import com.delivery.data.network.services.DeliveryService;
@@ -17,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
- public class DeliveryViewModel extends ViewModel {
+public class DeliveryViewModel extends ViewModel {
 
     private final MutableLiveData<Result> deliveryResult;
     private final MutableLiveData<Boolean> isLoading;
@@ -31,13 +34,14 @@ import retrofit2.Response;
         deliveryResult = new MutableLiveData<>();
         isLoading = new MutableLiveData<>();
 
-        deliveryItemArrayList =new ArrayList<>();
-        result=new Result(null,null,null);
+        deliveryItemArrayList = new ArrayList<>();
+        result = new Result(null, null, null);
     }
 
     public MutableLiveData<Result> getDeliveryList() {
         return deliveryResult;
     }
+
     MutableLiveData<Boolean> getLoadingStatus() {
         return isLoading;
     }
@@ -72,17 +76,15 @@ import retrofit2.Response;
         @Override
         public void onResponse(@NonNull Call<List<DeliveryItemResponseModel>> call, @NonNull Response<List<DeliveryItemResponseModel>> response) {
             List<DeliveryItemResponseModel> deliveryItemResponse = response.body();
-
-            if (deliveryItemResponse != null ) {
-                if (deliveryItemResponse.size()==0)
-                {
+            Log.d("response success", "success" + deliveryItemResponse);
+            if (deliveryItemResponse != null) {
+                if (deliveryItemResponse.size() == 0) {
 
                     setIsLoading(false);
 
-                }
-                else {
+                } else {
 
-                          deliveryItemArrayList.addAll(deliveryItemResponse);
+                    deliveryItemArrayList.addAll(deliveryItemResponse);
                     result.setStatus(Result.STATUS.SUCCESS);
                     result.setData(deliveryItemArrayList);
                     setDeliveries(result);
@@ -100,11 +102,11 @@ import retrofit2.Response;
 
         public void onFailure(@NonNull Call<List<DeliveryItemResponseModel>> call, @NonNull Throwable t) {
 
-
-                result.setStatus(Result.STATUS.ERROR);
-                result.setData(deliveryItemArrayList);
-                result.setError(t.getMessage());
-                setDeliveries(result);
+            Log.d("response error", "error" + t.getMessage());
+            result.setStatus(Result.STATUS.ERROR);
+            result.setData(deliveryItemArrayList);
+            result.setError(t.getMessage());
+            setDeliveries(result);
 
 
         }

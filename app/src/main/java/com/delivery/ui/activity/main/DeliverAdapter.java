@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.delivery.R;
 import com.delivery.data.network.model.DeliveryItemResponseModel;
@@ -38,11 +39,11 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
     private List<DeliveryItemResponseModel> mItems;
     private final OnDeliveryAdapter mListener;
 
-    public  DeliverAdapter(OnDeliveryAdapter listener, RecyclerView currentRecyclerView, final DeliveryActivity context) {
+    public DeliverAdapter(OnDeliveryAdapter listener, RecyclerView currentRecyclerView, final DeliveryActivity context) {
         mListener = listener;
         mItems = new ArrayList<>();
 
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager)currentRecyclerView.getLayoutManager();
+        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) currentRecyclerView.getLayoutManager();
         currentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -50,20 +51,20 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
 
 //                LogUtil.i(getClass().getName() + " Current page count  ", mContext.currentPage + "");
 
-               totalItemCount = linearLayoutManager != null ? linearLayoutManager.getItemCount() :0;
-               lastVisibleItem = linearLayoutManager != null ? linearLayoutManager.findLastVisibleItemPosition() :0;
+                totalItemCount = linearLayoutManager != null ? linearLayoutManager.getItemCount() : 0;
+                lastVisibleItem = linearLayoutManager != null ? linearLayoutManager.findLastVisibleItemPosition() : 0;
 
-                if ((!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) ) {
-                   context.offset=totalItemCount;
-                   // if (context.isLoadedMore ) {
+                if ((!loading && totalItemCount <= (lastVisibleItem + visibleThreshold))) {
+                    context.offset = totalItemCount;
+                    // if (context.isLoadedMore ) {
 
-                        context.onLoadMore(context.offset);
+                    context.onLoadMore(context.offset);
 
-                        loading = true;
+                    loading = true;
 
                     //}
 
-               }
+                }
             }
         });
 
@@ -75,10 +76,10 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public void setLoading()
-    {
-        loading=false;
+    public void setLoading() {
+        loading = false;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -92,7 +93,7 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
 
         holder.setOnClickListener(deliveryItemResponseModel);
         holder.setImage(deliveryItemResponseModel.getImage());
-        holder.setDescription(deliveryItemResponseModel.getDescription()  +" "+ deliveryItemResponseModel.getLocation().getAddress());
+        holder.setDescription(deliveryItemResponseModel.getId() + " " + deliveryItemResponseModel.getDescription() + " " + deliveryItemResponseModel.getLocation().getAddress());
     }
 
     @Override
@@ -109,13 +110,13 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
         @BindView(R.id.image)
         AppCompatImageView image;
 
-        @BindView(R.id.desc) TextView desc;
+        @BindView(R.id.desc)
+        TextView desc;
 
         private ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
 
 
         private void setImage(String imageUrl) {

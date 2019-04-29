@@ -1,7 +1,6 @@
 package com.delivery.ui.activity.main;
 
 
-
 import androidx.annotation.NonNull;
 
 import com.delivery.data.DataManager;
@@ -20,7 +19,7 @@ class DeliveryViewModelFactory implements ViewModelProvider.Factory {
     }*/
 
     public DeliveryViewModelFactory() {
-        this.deliveryService=DataManager.getInstance().getDeliveryService();
+        this.deliveryService = DataManager.getInstance().getDeliveryService();
     }
 
     @NonNull

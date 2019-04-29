@@ -4,8 +4,6 @@ package com.delivery.data;
 import com.delivery.data.network.services.DeliveryService;
 
 
-
-
 public class DataManager {
 
     private static DataManager sInstance;
@@ -20,7 +18,6 @@ public class DataManager {
         }
         return sInstance;
     }
-
 
 
     public DeliveryService getDeliveryService() {

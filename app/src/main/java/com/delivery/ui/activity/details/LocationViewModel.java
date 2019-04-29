@@ -1,9 +1,8 @@
 package com.delivery.ui.activity.details;
 
 
-
-
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 
 import com.delivery.data.network.model.DeliveryItemResponseModel;
@@ -15,7 +14,7 @@ import androidx.lifecycle.ViewModel;
 
 public class LocationViewModel extends ViewModel {
 
-    private final MutableLiveData<DeliveryItemResponseModel> deliveryItemMutableLiveData=new MutableLiveData<>();
+    private final MutableLiveData<DeliveryItemResponseModel> deliveryItemMutableLiveData = new MutableLiveData<>();
 
     public void loadDeliverableItemData(@NonNull Intent intent) {
         DeliveryItemResponseModel deliveryItemExtra = intent.getParcelableExtra(AppConstants.DELIVERY_ITEM_OBJECT);

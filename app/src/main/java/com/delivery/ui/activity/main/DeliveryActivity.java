@@ -1,9 +1,9 @@
 package com.delivery.ui.activity.main;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 
 import android.util.Log;
@@ -35,7 +35,7 @@ import butterknife.OnClick;
 public class DeliveryActivity extends AppCompatActivity implements DeliverAdapter.OnDeliveryAdapter, OnLoadMoreListener {
 
 
-    public int offset=0;
+    public int offset = 0;
     private DeliverAdapter deliverAdapter;
 
     @BindView(R.id.recycler_view)
@@ -62,7 +62,7 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         this.setTitle(AppConstants.THINGS_TO_DELIVER);
-        deliverAdapter = new DeliverAdapter(this,recyclerView, DeliveryActivity.this);
+        deliverAdapter = new DeliverAdapter(this, recyclerView, DeliveryActivity.this);
         recyclerView.setAdapter(deliverAdapter);
 
         viewModel = createViewModel();
@@ -74,7 +74,7 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
 
         ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
         connectionLiveData.observe(this, connection -> {
-            if (connection!=null && connection.getIsConnected()) {
+            if (connection != null && connection.getIsConnected()) {
                 switch (connection.getType()) {
                     case 0:
                         deliverAdapter.setLoading();
@@ -83,10 +83,10 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
                     case 1:
                         deliverAdapter.setLoading();
 
-                       break;
+                        break;
                 }
             } else {
-                Toast.makeText(DeliveryActivity.this,AppConstants.CONNECTION_OFF, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DeliveryActivity.this, AppConstants.CONNECTION_OFF, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -99,7 +99,7 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
 
     @OnClick(R.id.btn_retry)
     void onEmptyViewButtonClick() {
-        offset=0;
+        offset = 0;
 
         loadingDataFromNetwork();
     }
@@ -115,7 +115,8 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
     @Override
     public void onLoadMore(int offset) {
         //if(isLoadedMore) {
-            viewModel.loadDeliveriesNetwork(offset);
+        Log.d("request offset", offset + "==");
+        viewModel.loadDeliveriesNetwork(offset);
         //}
     }
 
@@ -139,19 +140,14 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
 
         @Override
         public void onChanged(@Nullable Result deliveryResult) {
-            if(deliveryResult!=null && deliveryResult.getStatus()==Result.STATUS.ERROR)
-            {
-                if(deliveryResult.getData()!=null && deliveryResult.getData().size()>0)
-                {
-                    Toast.makeText(DeliveryActivity.this,deliveryResult.getError(), Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+            if (deliveryResult != null && deliveryResult.getStatus() == Result.STATUS.ERROR) {
+                if (deliveryResult.getData() != null && deliveryResult.getData().size() > 0) {
+                    Toast.makeText(DeliveryActivity.this, deliveryResult.getError(), Toast.LENGTH_SHORT).show();
+                } else {
                     emptyView.setVisibility(View.VISIBLE);
-                    Toast.makeText(DeliveryActivity.this,deliveryResult.getError(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DeliveryActivity.this, deliveryResult.getError(), Toast.LENGTH_SHORT).show();
                 }
-            }
-         else {
+            } else {
                 deliverAdapter.setItems(deliveryResult.getData());
                 deliverAdapter.setLoading();
                 if (deliveryResult.getData().isEmpty()) {

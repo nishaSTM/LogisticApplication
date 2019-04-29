@@ -1,8 +1,8 @@
 package com.delivery.ui.activity.details;
 
 
-
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 
 
@@ -46,10 +46,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
         LocationViewModel viewModel = createViewModel();
 
-        viewModel.getDeliveryItemMutableLiveData().observe( LocationActivity.this, new LocationObserver());
+        viewModel.getDeliveryItemMutableLiveData().observe(LocationActivity.this, new LocationObserver());
 
         viewModel.loadDeliverableItemData(getIntent());
-        SupportMapFragment mapFragment =  (SupportMapFragment)getSupportFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
@@ -68,10 +68,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         @Override
         public void onChanged(@Nullable DeliveryItemResponseModel deliveryItemResponseModel) {
 
-            if (deliveryItemResponseModel !=null) {
+            if (deliveryItemResponseModel != null) {
 
-              desc.setText(deliveryItemResponseModel.getDescription());
-              setImage(deliveryItemResponseModel.getImage());
+                desc.setText(deliveryItemResponseModel.getDescription());
+                setImage(deliveryItemResponseModel.getImage());
             }
 
 
@@ -81,11 +81,12 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private void setImage(String imageUrl) {
         Glide.with(this).load(imageUrl).into(imageView);
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
 
-        DeliveryItemResponseModel deliveryObject=getIntent().getParcelableExtra(AppConstants.DELIVERY_ITEM_OBJECT);
+        DeliveryItemResponseModel deliveryObject = getIntent().getParcelableExtra(AppConstants.DELIVERY_ITEM_OBJECT);
         LatLng loc = new LatLng(deliveryObject.getLocation().getLat(), deliveryObject.getLocation().getLng());
         googleMap.addMarker(new MarkerOptions().position(loc)
                 .title(deliveryObject.getLocation().getAddress()));
@@ -94,7 +95,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
         CameraUpdateFactory.zoomTo(12.0f);
     }
-
 
 
 }

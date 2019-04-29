@@ -53,11 +53,10 @@ public class DeliveryTest {
     }
 
 
-
     @Test
-    public void testDeliveryViewModelResponseSuccess(){
-        List<DeliveryItemResponseModel> list=new ArrayList<>();
-        DeliveryItemResponseModel itemResponseModel=new DeliveryItemResponseModel("desc","imagurl","id",null);
+    public void testDeliveryViewModelResponseSuccess() {
+        List<DeliveryItemResponseModel> list = new ArrayList<>();
+        DeliveryItemResponseModel itemResponseModel = new DeliveryItemResponseModel("desc", "imagurl", "id", null);
         list.add(itemResponseModel);
         Mockito.doAnswer(invocation -> {
             Callback<List<DeliveryItemResponseModel>> call = invocation.getArgument(0);
@@ -67,7 +66,7 @@ public class DeliveryTest {
         Mockito.when(deliveryApi.getAllDeliveryItems(0, AppConstants.LIMIT)).thenReturn(mockedCall);
         Mockito.when(deliveryService.getDeliveryApi()).thenReturn(deliveryApi);
         viewModel.loadDeliveriesNetwork(0);
-       // List<DeliveryItemResponseModel> abc=new ArrayList();
+        // List<DeliveryItemResponseModel> abc=new ArrayList();
         try {
             TestObserver.test(viewModel.getDeliveryList()).awaitValue().assertHasValue().
                     map(input -> input.getData())
@@ -79,20 +78,20 @@ public class DeliveryTest {
     }
 
     @Test
-    public void testDeliveryViewModelResponseFailure(){
-        List<DeliveryItemResponseModel> list=new ArrayList<>();
-        DeliveryItemResponseModel itemResponseModel=new DeliveryItemResponseModel("desc","imagurl","id",null);
+    public void testDeliveryViewModelResponseFailure() {
+        List<DeliveryItemResponseModel> list = new ArrayList<>();
+        DeliveryItemResponseModel itemResponseModel = new DeliveryItemResponseModel("desc", "imagurl", "id", null);
         list.add(itemResponseModel);
         Mockito.doAnswer(invocation -> {
             Callback<List<DeliveryItemResponseModel>> call = invocation.getArgument(0);
-             throwable=new Throwable("Bad Request");
-            call.onFailure(mockedCall,throwable);
+            throwable = new Throwable("Bad Request");
+            call.onFailure(mockedCall, throwable);
             return null;
         }).when(mockedCall).enqueue(Mockito.any());
         Mockito.when(deliveryApi.getAllDeliveryItems(0, AppConstants.LIMIT)).thenReturn(mockedCall);
         Mockito.when(deliveryService.getDeliveryApi()).thenReturn(deliveryApi);
         viewModel.loadDeliveriesNetwork(0);
-       // List<DeliveryItemResponseModel> differentResponseModel=new ArrayList();
+        // List<DeliveryItemResponseModel> differentResponseModel=new ArrayList();
         try {
             TestObserver.test(viewModel.getDeliveryList()).awaitValue().
                     map(input -> input.getError()).

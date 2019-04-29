@@ -4,6 +4,7 @@ package com.delivery;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import android.content.Intent;
+
 import com.delivery.data.network.model.DeliveryItemResponseModel;
 import com.delivery.ui.activity.details.LocationViewModel;
 import com.delivery.utils.AppConstants;
@@ -33,6 +34,7 @@ public class LocationViewModelTest {
     private LocationViewModel viewModel;
     @Mock
     private Intent intent;
+
     @Before
     public void setUp() {
         viewModel = new LocationViewModel();
