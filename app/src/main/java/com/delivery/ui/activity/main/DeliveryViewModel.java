@@ -2,8 +2,6 @@ package com.delivery.ui.activity.main;
 
 
 import androidx.annotation.NonNull;
-
-
 import com.delivery.data.network.model.DeliveryItemResponseModel;
 import com.delivery.data.network.model.Result;
 import com.delivery.data.network.services.DeliveryService;
@@ -93,7 +91,6 @@ import retrofit2.Response;
 
                 result.setStatus(Result.STATUS.SUCCESS);
                 result.setData(Collections.emptyList());
-               // result.setError(t.getMessage());
                 setDeliveries(result);
 
             }
@@ -103,13 +100,12 @@ import retrofit2.Response;
 
         public void onFailure(@NonNull Call<List<DeliveryItemResponseModel>> call, @NonNull Throwable t) {
 
-            if(getDeliveryList()!=null && getDeliveryList().getValue().getData()!=null && getDeliveryList().getValue().getData().size()==0) {
-                //setDeliveries(Collections.<DeliveryItemResponseModel>emptyList());
+
                 result.setStatus(Result.STATUS.ERROR);
-                result.setData(Collections.emptyList());
+                result.setData(deliveryItemArrayList);
                 result.setError(t.getMessage());
                 setDeliveries(result);
-            }
+
 
         }
     }

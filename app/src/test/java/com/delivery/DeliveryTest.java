@@ -42,8 +42,7 @@ public class DeliveryTest {
     @Mock
     private Call<List<DeliveryItemResponseModel>> mockedCall;
 
-    @Mock
-    private Throwable throwable;
+    Throwable throwable;
 
     @Mock
     private Error error;
@@ -85,14 +84,14 @@ public class DeliveryTest {
         DeliveryItemResponseModel itemResponseModel=new DeliveryItemResponseModel("desc","imagurl","id",null);
         list.add(itemResponseModel);
         Mockito.doAnswer(invocation -> {
-            Callback<List<DeliveryItemResponseModel>> call = invocation.getArgument(40);
-            Throwable throwable=new Throwable("Badd Request");
+            Callback<List<DeliveryItemResponseModel>> call = invocation.getArgument(0);
+             throwable=new Throwable("Bad Request");
             call.onFailure(mockedCall,throwable);
             return null;
         }).when(mockedCall).enqueue(Mockito.any());
-        Mockito.when(deliveryApi.getAllDeliveryItems(40, AppConstants.LIMIT)).thenReturn(mockedCall);
+        Mockito.when(deliveryApi.getAllDeliveryItems(0, AppConstants.LIMIT)).thenReturn(mockedCall);
         Mockito.when(deliveryService.getDeliveryApi()).thenReturn(deliveryApi);
-        viewModel.loadDeliveriesNetwork(40);
+        viewModel.loadDeliveriesNetwork(0);
        // List<DeliveryItemResponseModel> differentResponseModel=new ArrayList();
         try {
             TestObserver.test(viewModel.getDeliveryList()).awaitValue().

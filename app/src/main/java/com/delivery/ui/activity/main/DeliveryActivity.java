@@ -15,8 +15,6 @@ import android.widget.Toast;
 import com.delivery.R;
 
 import com.delivery.data.OnLoadMoreListener;
-
-import com.delivery.data.network.model.ConnectionModel;
 import com.delivery.data.network.model.DeliveryItemResponseModel;
 
 import com.delivery.data.network.model.Result;
@@ -24,8 +22,6 @@ import com.delivery.data.network.services.ConnectionLiveData;
 import com.delivery.ui.activity.details.LocationActivity;
 import com.delivery.utils.AppConstants;
 
-
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -147,13 +143,10 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
             {
                 if(deliveryResult.getData()!=null && deliveryResult.getData().size()>0)
                 {
-                    //toast message displayed at the bottom
-                    Log.d("error but not empty","error");
                     Toast.makeText(DeliveryActivity.this,deliveryResult.getError(), Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Log.d("error and empty","error");
                     emptyView.setVisibility(View.VISIBLE);
                     Toast.makeText(DeliveryActivity.this,deliveryResult.getError(), Toast.LENGTH_SHORT).show();
                 }
@@ -162,10 +155,8 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
                 deliverAdapter.setItems(deliveryResult.getData());
                 deliverAdapter.setLoading();
                 if (deliveryResult.getData().isEmpty()) {
-                    Log.d("success and empty","success");
                     emptyView.setVisibility(View.VISIBLE);
                 } else {
-                    Log.d(" success but not empty","success");
                     emptyView.setVisibility(View.GONE);
                 }
             }
