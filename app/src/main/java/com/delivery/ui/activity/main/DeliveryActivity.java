@@ -139,7 +139,7 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
 
         @Override
         public void onChanged(@Nullable Result deliveryResult) {
-            if(deliveryResult.getStatus()==Result.STATUS.ERROR)
+            if(deliveryResult!=null && deliveryResult.getStatus()==Result.STATUS.ERROR)
             {
                 if(deliveryResult.getData()!=null && deliveryResult.getData().size()>0)
                 {
