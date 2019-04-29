@@ -1,0 +1,7 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Delivery</string>
+    <string name="retry" tools:ignore="ExtraTranslation">Try Again</string>
+    <string name="desc">Description</string>
+    <string name="description_text">Description</string>
+
+</resources>

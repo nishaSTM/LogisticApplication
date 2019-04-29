@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activity.details.LocationActivity">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/description_layout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/zero_dp" />
+
+
+    <RelativeLayout
+        android:id="@+id/description_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/small_padding"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/width"
+            android:layout_height="@dimen/height"
+            tools:background="@color/black" />
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/avg_margin"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/image"
+            tools:text="@string/description_text"
+            android:textSize="@dimen/medium_textSize"
+            android:typeface="sans"/>
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
