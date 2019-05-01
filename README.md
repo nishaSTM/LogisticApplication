@@ -16,5 +16,5 @@ This is a sample app to demonstrate data loading from webservice and efficiently
             git clone https://github.com/nishaSTM/LogisticApp.git
 2. Open Android studio -> File -> Open.
 3. Navigate to the folder where you have cloned/downloaded the repository.
-4. Replace the google_maps_key string in google_maps_api_key.xml file with your key.
+4. Replace the google_map_key string in google_map_api.xml file with your key.
 5. Compile and Run.
