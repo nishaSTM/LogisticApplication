@@ -16,15 +16,20 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyADeS-_f5sawdi3J75bQVcSS9w2ya7QkOI"/>
+            android:value="@string/google_api_key"/>
 
-        <activity android:name="com.delivery.ui.activity.main.DeliveryActivity">
+        <activity
+
+            android:name="com.delivery.ui.activity.main.DeliveryActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/delivery_activity_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.delivery.ui.activity.details.LocationActivity" />
+        <activity android:name="com.delivery.ui.activity.details.LocationActivity"
+            android:screenOrientation="portrait"/>
         <uses-library android:name="android.test.runner"
             android:required="false" />
         <uses-library android:name="android.test.base"

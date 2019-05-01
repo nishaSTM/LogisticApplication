@@ -5,5 +5,7 @@
     <string name="item_element_text">description</string>
     <string name="middle">middle</string>
     <string name="image">Image</string>
+    <string name="delivery_activity_title">Things to Remember</string>
+    <string name="CONNECTION_OFF">No Internet Connection</string>
 
 </resources>

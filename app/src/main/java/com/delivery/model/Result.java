@@ -1,4 +1,4 @@
-package com.delivery.data.network.model;
+package com.delivery.model;
 
 import java.util.List;
 

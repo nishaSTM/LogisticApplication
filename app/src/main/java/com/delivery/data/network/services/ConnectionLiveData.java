@@ -6,16 +6,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
-import com.delivery.data.network.model.ConnectionModel;
-
+import com.delivery.model.ConnectionModel;
 import androidx.lifecycle.LiveData;
 
-
 public class ConnectionLiveData extends LiveData<ConnectionModel> {
-
     private final Context context;
-
     public ConnectionLiveData(Context context) {
         this.context = context;
     }

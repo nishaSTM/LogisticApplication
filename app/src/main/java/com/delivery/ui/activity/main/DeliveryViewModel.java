@@ -4,8 +4,8 @@ package com.delivery.ui.activity.main;
 import androidx.annotation.NonNull;
 
 
-import com.delivery.data.network.model.DeliveryItemResponseModel;
-import com.delivery.data.network.model.Result;
+import com.delivery.model.DeliveryItemResponseModel;
+import com.delivery.model.Result;
 import com.delivery.data.network.services.DeliveryService;
 import com.delivery.utils.AppConstants;
 
@@ -33,7 +33,6 @@ public class DeliveryViewModel extends ViewModel {
         this.deliveryService = deliveryService;
         deliveryResult = new MutableLiveData<>();
         isLoading = new MutableLiveData<>();
-
         deliveryItemArrayList = new ArrayList<>();
         result = new Result(null, null, null);
     }
@@ -63,7 +62,6 @@ public class DeliveryViewModel extends ViewModel {
 
     private void setDeliveries(Result deliveryItems) {
         setIsLoading(false);
-
         deliveryResult.postValue(deliveryItems);
     }
 
@@ -82,13 +80,11 @@ public class DeliveryViewModel extends ViewModel {
                 result.setStatus(Result.STATUS.ERROR);
                 result.setError(AppConstants.CONNECTION_OFF);
                 result.setData(deliveryItemArrayList);
-
                 setDeliveries(result);
             } else {
                 deliveryItemArrayList.addAll(deliveryItemResponse);
                 result.setStatus(Result.STATUS.SUCCESS);
                 result.setData(deliveryItemArrayList);
-
                 setDeliveries(result);
             }
 
@@ -101,7 +97,6 @@ public class DeliveryViewModel extends ViewModel {
 
             result.setStatus(Result.STATUS.ERROR);
             result.setData(deliveryItemArrayList);
-
             result.setError(t.getMessage());
             setDeliveries(result);
 

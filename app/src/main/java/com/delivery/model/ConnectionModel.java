@@ -1,4 +1,4 @@
-package com.delivery.data.network.model;
+package com.delivery.model;
 
 public class ConnectionModel {
 
@@ -9,11 +9,9 @@ public class ConnectionModel {
         this.type = type;
         this.isConnected = isConnected;
     }
-
     public int getType() {
         return type;
     }
-
     public boolean getIsConnected() {
         return isConnected;
     }

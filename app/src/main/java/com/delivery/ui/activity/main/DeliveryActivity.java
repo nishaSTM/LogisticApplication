@@ -15,9 +15,9 @@ import android.widget.Toast;
 import com.delivery.R;
 
 import com.delivery.data.OnLoadMoreListener;
-import com.delivery.data.network.model.DeliveryItemResponseModel;
+import com.delivery.model.DeliveryItemResponseModel;
 
-import com.delivery.data.network.model.Result;
+import com.delivery.model.Result;
 import com.delivery.data.network.services.ConnectionLiveData;
 import com.delivery.ui.activity.details.LocationActivity;
 import com.delivery.utils.AppConstants;
@@ -65,12 +65,9 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        this.setTitle(AppConstants.THINGS_TO_DELIVER);
         deliverAdapter = new DeliverAdapter(this, recyclerView, DeliveryActivity.this);
         recyclerView.setAdapter(deliverAdapter);
-
         viewModel = createViewModel();
-
         viewModel.getLoadingStatus().observe(this, new LoadingObserver());
         viewModel.getDeliveryList().observe(this, new DeliveryItemObserver());
 
@@ -79,19 +76,11 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
         ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
         connectionLiveData.observe(this, connection -> {
             if (connection != null && connection.getIsConnected()) {
-                switch (connection.getType()) {
-                    case 0:
 
-                        deliverAdapter.setLoading();
+                deliverAdapter.setLoading();
 
-                        break;
-                    case 1:
-                        deliverAdapter.setLoading();
-
-                        break;
-                }
             } else {
-                Toast.makeText(DeliveryActivity.this, AppConstants.CONNECTION_OFF, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DeliveryActivity.this, getResources().getString(R.string.CONNECTION_OFF), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -131,7 +120,6 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
         @Override
         public void onChanged(@Nullable Boolean isLoading) {
             if (isLoading == null) return;
-
             if (isLoading) {
                 progressBar.setVisibility(View.VISIBLE);
             } else {
@@ -146,13 +134,11 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
         public void onChanged(@Nullable Result deliveryResult) {
 
 
-            if (deliveryResult.getStatus() == Result.STATUS.ERROR) {
+            if (deliveryResult!=null && deliveryResult.getStatus() == Result.STATUS.ERROR) {
                 if (deliveryResult.getData() == null || deliveryResult.getData().size() == 0) {
                     emptyView.setVisibility(View.VISIBLE);
                 } else {
                     emptyView.setVisibility(View.GONE);
-                    deliverAdapter.setItems(deliveryResult.getData());
-                    deliverAdapter.notifyDataSetChanged();
                     deliverAdapter.setLoading();
                     Snackbar snackbar = Snackbar.make(findViewById(R.id.main_content), deliveryResult.getError(), Snackbar.LENGTH_LONG);
                     View sbView = snackbar.getView();
@@ -161,7 +147,7 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
                 }
 
             } else {
-                if (deliveryResult.getData().size() == 0) {
+                if (deliveryResult!=null && deliveryResult.getData().size() == 0) {
                     emptyView.setVisibility(View.VISIBLE);
                 } else {
                     emptyView.setVisibility(View.GONE);

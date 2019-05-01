@@ -5,7 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import android.content.Intent;
 
-import com.delivery.data.network.model.DeliveryItemResponseModel;
+import com.delivery.model.DeliveryItemResponseModel;
 import com.delivery.ui.activity.details.LocationViewModel;
 import com.delivery.utils.AppConstants;
 import com.jraska.livedata.TestObserver;

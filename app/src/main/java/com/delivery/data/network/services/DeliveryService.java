@@ -2,7 +2,9 @@ package com.delivery.data.network.services;
 
 
 import com.delivery.App;
-import com.delivery.data.network.model.DeliveryItemResponseModel;
+
+import com.delivery.model.DeliveryItemResponseModel;
+import com.delivery.utils.AppConstants;
 import com.delivery.utils.InternetUtil;
 import com.google.gson.Gson;
 
@@ -16,21 +18,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-
 public class DeliveryService {
-
-    private static final String URL = "https://mock-api-mobile.dev.lalamove.com/";
-
+    private static final String URL = AppConstants.BASE_URL;
     private DeliveryApi mDeliveryApi;
-
-
     private static DeliveryService instance;
-
 
     public static DeliveryService getInstance() {
         if (instance == null) {
@@ -40,11 +35,9 @@ public class DeliveryService {
         return instance;
     }
 
-
     private DeliveryService() {
-        setupRetrofitAndOkHttpAnotherMethod(App.getInstance().getCacheDir());
+        setupRetrofitAndOkHttpMethod(App.getInstance().getCacheDir());
     }
-
 
     private final Interceptor REWRITE_RESPONSE_INTERCEPTOR = chain -> {
         okhttp3.Response originalResponse = chain.proceed(chain.request());
@@ -71,7 +64,7 @@ public class DeliveryService {
         return chain.proceed(request);
     };
 
-    private void setupRetrofitAndOkHttpAnotherMethod(File cacheDir) {
+    private void setupRetrofitAndOkHttpMethod(File cacheDir) {
         File httpCacheDirectory = new File(cacheDir, "offlineCache");
         Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -84,18 +77,15 @@ public class DeliveryService {
                 .baseUrl(URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         mDeliveryApi = mRetrofit.create(DeliveryApi.class);
     }
-
 
     public DeliveryApi getDeliveryApi() {
         return mDeliveryApi;
     }
 
     public interface DeliveryApi {
-
         @GET("deliveries/")
         Call<List<DeliveryItemResponseModel>> getAllDeliveryItems(@Query("offset") Integer offset,
                                                                   @Query("limit") Integer limit);

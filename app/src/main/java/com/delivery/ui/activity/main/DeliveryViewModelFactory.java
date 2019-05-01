@@ -2,16 +2,12 @@ package com.delivery.ui.activity.main;
 
 
 import androidx.annotation.NonNull;
-
 import com.delivery.data.DataManager;
 import com.delivery.data.network.services.DeliveryService;
-
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-
 class DeliveryViewModelFactory implements ViewModelProvider.Factory {
-
     private final DeliveryService deliveryService;
 
 

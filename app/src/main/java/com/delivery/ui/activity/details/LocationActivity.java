@@ -5,22 +5,19 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.bumptech.glide.Glide;
 import com.delivery.R;
-import com.delivery.data.network.model.DeliveryItemResponseModel;
-import com.delivery.utils.AppConstants;
+import com.delivery.model.DeliveryItemResponseModel;
+import com.delivery.model.LocationCoordinatesResponseModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
@@ -38,30 +35,28 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     @BindView(R.id.image_location)
     ImageView imageView;
 
+    private LocationViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
         ButterKnife.bind(this);
 
-        LocationViewModel viewModel = createViewModel();
+        viewModel = createViewModel();
 
         viewModel.getDeliveryItemMutableLiveData().observe(LocationActivity.this, new LocationObserver());
-
         viewModel.loadDeliverableItemData(getIntent());
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-        mapFragment.getMapAsync(this);
+        if (mapFragment != null)
+            mapFragment.getMapAsync(this);
     }
 
     private LocationViewModel createViewModel() {
         return ViewModelProviders.of(this).get(LocationViewModel.class);
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 
     private class LocationObserver implements Observer<DeliveryItemResponseModel> {
@@ -69,12 +64,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         public void onChanged(@Nullable DeliveryItemResponseModel deliveryItemResponseModel) {
 
             if (deliveryItemResponseModel != null) {
-
                 desc_location.setText(deliveryItemResponseModel.getDescription());
                 setImage(deliveryItemResponseModel.getImage());
             }
-
-
         }
     }
 
@@ -84,12 +76,14 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        DeliveryItemResponseModel deliveryObject = viewModel.getDeliveryItemMutableLiveData().getValue();
+        LocationCoordinatesResponseModel location = null;
+        if (deliveryObject != null)
+            location = deliveryObject.getLocation();
+        LatLng loc = new LatLng(location.getLat(), location.getLng());
 
-
-        DeliveryItemResponseModel deliveryObject = getIntent().getParcelableExtra(AppConstants.DELIVERY_ITEM_OBJECT);
-        LatLng loc = new LatLng(deliveryObject.getLocation().getLat(), deliveryObject.getLocation().getLng());
         googleMap.addMarker(new MarkerOptions().position(loc)
-                .title(deliveryObject.getLocation().getAddress()));
+                .title(location.getAddress()));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
         googleMap.getUiSettings().setZoomControlsEnabled(true);
 

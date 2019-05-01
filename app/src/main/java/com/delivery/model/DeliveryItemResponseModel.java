@@ -1,15 +1,23 @@
-package com.delivery.data.network.model;
+package com.delivery.model;
 
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class DeliveryItemResponseModel implements Parcelable {
+    private String description;
+    private String imageUrl;
+    private String id;
+    private LocationCoordinatesResponseModel location;
+
     public DeliveryItemResponseModel(String description, String imageUrl, String id, LocationCoordinatesResponseModel location) {
         this.description = description;
         this.imageUrl = imageUrl;
         this.id = id;
         this.location = location;
+    }
+
+    public DeliveryItemResponseModel() {
     }
 
     public String getDescription() {
@@ -29,11 +37,6 @@ public class DeliveryItemResponseModel implements Parcelable {
     }
 
 
-    private String description;
-
-
-    private String imageUrl;
-
     public String getId() {
         return id;
     }
@@ -48,15 +51,6 @@ public class DeliveryItemResponseModel implements Parcelable {
 
     public void setLocation(LocationCoordinatesResponseModel location) {
         this.location = location;
-    }
-
-
-    private String id;
-
-
-    private LocationCoordinatesResponseModel location;
-
-    public DeliveryItemResponseModel() {
     }
 
     private DeliveryItemResponseModel(Parcel in) {

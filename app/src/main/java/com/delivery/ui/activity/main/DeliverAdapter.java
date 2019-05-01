@@ -11,11 +11,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.delivery.R;
-import com.delivery.data.network.model.DeliveryItemResponseModel;
-
+import com.delivery.model.DeliveryItemResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -23,31 +23,25 @@ import butterknife.ButterKnife;
 
 
 public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHolder> {
-
-
     private int totalItemCount;
     private int lastVisibleItem;
     private int visibleThreshold;
     private boolean loading = false;
-
-
+    private List<DeliveryItemResponseModel> mItems;
+    private final OnDeliveryAdapter mListener;
     public interface OnDeliveryAdapter {
         void onDeliveryItemClicked(DeliveryItemResponseModel deliveryItemResponseModel);
     }
 
-    private List<DeliveryItemResponseModel> mItems;
-    private final OnDeliveryAdapter mListener;
 
     public DeliverAdapter(OnDeliveryAdapter listener, RecyclerView currentRecyclerView, final DeliveryActivity context) {
         mListener = listener;
         mItems = new ArrayList<>();
-
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) currentRecyclerView.getLayoutManager();
         currentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
                 totalItemCount = linearLayoutManager != null ? linearLayoutManager.getItemCount() : 0;
                 lastVisibleItem = linearLayoutManager != null ? linearLayoutManager.findLastVisibleItemPosition() : 0;
 
@@ -83,7 +77,6 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DeliveryItemResponseModel deliveryItemResponseModel = getItem(position);
-
         holder.setOnClickListener(deliveryItemResponseModel);
         holder.setImage(deliveryItemResponseModel.getImage());
         holder.setDescription(deliveryItemResponseModel.getDescription() + " " + deliveryItemResponseModel.getLocation().getAddress());

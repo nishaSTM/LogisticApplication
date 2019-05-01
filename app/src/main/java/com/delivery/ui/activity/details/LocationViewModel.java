@@ -5,9 +5,8 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.delivery.data.network.model.DeliveryItemResponseModel;
+import com.delivery.model.DeliveryItemResponseModel;
 import com.delivery.utils.AppConstants;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
