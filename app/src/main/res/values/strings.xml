@@ -2,6 +2,8 @@
     <string name="app_name">Delivery</string>
     <string name="retry" tools:ignore="ExtraTranslation">Try Again</string>
     <string name="desc">Description</string>
-    <string name="description_text">Description</string>
+    <string name="item_element_text">description</string>
+    <string name="middle">middle</string>
+    <string name="image">Image</string>
 
 </resources>

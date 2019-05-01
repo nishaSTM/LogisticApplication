@@ -29,10 +29,10 @@ public class LocationActivityTest {
     public void ensureTextChangesWork() {
         // Type text and then press the button.
 
-        onView(withId(R.id.desc)).perform(click()).check(matches(isDisplayed()));
+        onView(withId(R.id.desc_location)).perform(click()).check(matches(isDisplayed()));
 
         // Check that the text was changed.
-        onView(withId(R.id.desc)).check(matches(withText(R.string.desc)));
+        onView(withId(R.id.desc_location)).check(matches(withText(R.string.desc)));
     }
 
 

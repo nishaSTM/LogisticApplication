@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -22,7 +23,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -32,11 +32,11 @@ import butterknife.ButterKnife;
 
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback, LifecycleOwner {
 
-    @BindView(R.id.desc)
-    TextView desc;
+    @BindView(R.id.desc_location)
+    TextView desc_location;
 
-    @BindView(R.id.image)
-    AppCompatImageView imageView;
+    @BindView(R.id.image_location)
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
             if (deliveryItemResponseModel != null) {
 
-                desc.setText(deliveryItemResponseModel.getDescription());
+                desc_location.setText(deliveryItemResponseModel.getDescription());
                 setImage(deliveryItemResponseModel.getImage());
             }
 

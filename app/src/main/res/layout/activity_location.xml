@@ -23,22 +23,26 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image"
+        <ImageView
+            android:id="@+id/image_location"
             android:layout_width="@dimen/width"
             android:layout_height="@dimen/height"
+            android:contentDescription="@string/image"
             tools:background="@color/black" />
 
         <TextView
-            android:id="@+id/desc"
-            android:layout_width="wrap_content"
+            android:id="@+id/desc_location"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/avg_margin"
+            android:layout_marginLeft="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/avg_margin"
+            android:layout_toEndOf="@id/image_location"
+            android:layout_toRightOf="@+id/image_location"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/image"
-            tools:text="@string/description_text"
-            android:textSize="@dimen/medium_textSize"
-            android:typeface="sans"/>
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="@dimen/small_textsize"
+            android:transitionName="@string/desc"
+            tools:text="@string/desc"/>
 
 
 

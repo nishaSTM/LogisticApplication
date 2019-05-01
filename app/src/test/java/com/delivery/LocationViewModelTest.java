@@ -45,9 +45,7 @@ public class LocationViewModelTest {
         final DeliveryItemResponseModel mDeliveryItemResponseModel =
                 new DeliveryItemResponseModel("desc", "image_url", "1", null);
 
-        final DeliveryItemResponseModel mDeliveryItemResponseModelDifferent =
-                new DeliveryItemResponseModel("desc", "image_url", "2", null);
-        Mockito.when(intent.getParcelableExtra(AppConstants.DELIVERY_ITEM_OBJECT)).thenReturn(mDeliveryItemResponseModel);
+          Mockito.when(intent.getParcelableExtra(AppConstants.DELIVERY_ITEM_OBJECT)).thenReturn(mDeliveryItemResponseModel);
         viewModel.loadDeliverableItemData(intent);
         try {
             TestObserver.test(viewModel.getDeliveryItemMutableLiveData()).

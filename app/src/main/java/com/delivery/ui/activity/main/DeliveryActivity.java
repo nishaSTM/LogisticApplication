@@ -2,11 +2,11 @@ package com.delivery.ui.activity.main;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -21,9 +21,11 @@ import com.delivery.data.network.model.Result;
 import com.delivery.data.network.services.ConnectionLiveData;
 import com.delivery.ui.activity.details.LocationActivity;
 import com.delivery.utils.AppConstants;
+import com.google.android.material.snackbar.Snackbar;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +47,9 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
 
     @BindView(R.id.emptyView)
     FrameLayout emptyView;
+
+    @BindView(R.id.main_content)
+    CoordinatorLayout coordinatorLayout;
 
     private DeliveryViewModel viewModel;
 
@@ -149,7 +154,10 @@ public class DeliveryActivity extends AppCompatActivity implements DeliverAdapte
                     deliverAdapter.setItems(deliveryResult.getData());
                     deliverAdapter.notifyDataSetChanged();
                     deliverAdapter.setLoading();
-                    Toast.makeText(DeliveryActivity.this, deliveryResult.getError(), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.main_content), deliveryResult.getError(), Snackbar.LENGTH_LONG);
+                    View sbView = snackbar.getView();
+                    sbView.setBackgroundColor(Color.RED);
+                    snackbar.show();
                 }
 
             } else {

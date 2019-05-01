@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,8 +16,6 @@ import com.delivery.data.network.model.DeliveryItemResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -102,7 +101,7 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.image)
-        AppCompatImageView image;
+        ImageView image;
 
         @BindView(R.id.desc)
         TextView desc;

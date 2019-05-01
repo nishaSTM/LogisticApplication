@@ -25,7 +25,12 @@
             </intent-filter>
         </activity>
         <activity android:name="com.delivery.ui.activity.details.LocationActivity" />
-
+        <uses-library android:name="android.test.runner"
+            android:required="false" />
+        <uses-library android:name="android.test.base"
+            android:required="false" />
+        <uses-library android:name="android.test.mock"
+            android:required="false" />
     </application>
 
 </manifest>

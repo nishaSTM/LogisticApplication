@@ -1,7 +1,6 @@
 package com.delivery.utils;
 
 
-import com.delivery.data.network.model.Result;
 
 public class AppConstants {
 
