@@ -5,7 +5,7 @@ This is a logistic sample app to demonstrate data loading from webservice using 
 - App should support only portrait orientation. 
 - App would support only English language.
 
-# Libraries Details
+# Libraries Used
 - Retrofit2 is used for Webservice calls and data caching
 - Glide for Image downloading
 - Data Binding 
@@ -18,8 +18,8 @@ This is a logistic sample app to demonstrate data loading from webservice using 
 
 
 # Instructions to Install
-1.Download the repository to your local machine
-2.Open the repo using Android Stdio
-3.Replace the google_map_key string with your key.
+- Download the repository to your local machine
+- Open the repo using Android Stdio
+- Replace the google_map_key string with your key.
 
 
