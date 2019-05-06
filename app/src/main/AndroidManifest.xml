@@ -20,7 +20,7 @@
 
         <activity
 
-            android:name=".ui.main.DeliveryActivity"
+            android:name=".ui.activity.DeliveryActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.details.LocationActivity"
+            android:name=".ui.activity.LocationActivity"
             android:screenOrientation="portrait" />
 
         <uses-library

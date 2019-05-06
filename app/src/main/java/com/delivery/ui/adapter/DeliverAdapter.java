@@ -1,4 +1,4 @@
-package com.delivery.ui.main;
+package com.delivery.ui.adapter;
 
 
 import androidx.annotation.NonNull;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.delivery.R;
 import com.delivery.databinding.ItemDeliveryBinding;
-import com.delivery.listener.DeliveryItemClickListener;
+import com.delivery.listener.DeliveryItemListener;
 import com.delivery.model.DeliveryItem;
 
 import java.util.ArrayList;
@@ -19,10 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHolder> {
     private List<DeliveryItem> deliveryItemList;
-    private final DeliveryItemClickListener deliveryItemClickListener;
+    private final DeliveryItemListener deliveryItemListener;
+    private LayoutInflater layoutInflater;
 
-    public DeliverAdapter(DeliveryItemClickListener deliveryItemClickListener) {
-        this.deliveryItemClickListener = deliveryItemClickListener;
+    public DeliverAdapter(DeliveryItemListener deliveryItemListener) {
+        this.deliveryItemListener = deliveryItemListener;
         deliveryItemList = new ArrayList<>();
     }
 
@@ -35,20 +36,32 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final ItemDeliveryBinding itemDeliveryBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_delivery,
-                parent, false);
+        if (layoutInflater == null) {
+            layoutInflater = LayoutInflater.from(parent.getContext());
+        }
+        final ItemDeliveryBinding itemDeliveryBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_delivery, parent, false);
         return new ViewHolder(itemDeliveryBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.bindDeliveryItem(getItem(position));
-        holder.itemDeliveryBinding.parentView.setOnClickListener(v -> deliveryItemClickListener.onDeliveryItemClick(getItem(position)));
+        holder.itemDeliveryBinding.parentView.setOnClickListener(v -> deliveryItemListener.onDeliveryItemClick(getItem(position)));
     }
 
     @Override
     public int getItemCount() {
         return deliveryItemList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     private DeliveryItem getItem(int position) {
@@ -67,7 +80,7 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
         void bindDeliveryItem(DeliveryItem deliveryItem) {
 
             if (itemDeliveryBinding.getDeliveryItemViewModel() == null) {
-                itemDeliveryBinding.setDeliveryItemViewModel(deliveryItemClickListener.getDeliveryItemViewModel());
+                itemDeliveryBinding.setDeliveryItemViewModel(deliveryItemListener.getDeliveryItemViewModel());
             }
             itemDeliveryBinding.getDeliveryItemViewModel().setDeliveryItem(deliveryItem);
             itemDeliveryBinding.executePendingBindings();

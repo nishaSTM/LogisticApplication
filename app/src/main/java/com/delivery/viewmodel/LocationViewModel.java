@@ -17,12 +17,12 @@ public class LocationViewModel extends ViewModel {
     }
 
     @SuppressWarnings("unused")
-    @BindingAdapter("imageUrl")
+    @BindingAdapter("image")
     public static void loadImage(ImageView view, String imageUrl) {
         Glide.with(view.getContext()).load(imageUrl).into(view);
     }
 
-    public String getImageUrl() {
+    public String getImage() {
         return deliveryItem.getImage();
     }
 
@@ -31,6 +31,6 @@ public class LocationViewModel extends ViewModel {
     }
 
     public void setDeliveryItem(DeliveryItem deliveryItem) {
-        this.deliveryItem=deliveryItem;
+        this.deliveryItem = deliveryItem;
     }
 }

@@ -1,5 +1,4 @@
-package com.delivery.ui.main;
-
+package com.delivery.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,13 +6,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.view.View;
+
 import com.delivery.R;
 import com.delivery.databinding.ActivityMainBinding;
-import com.delivery.listener.DeliveryItemClickListener;
+import com.delivery.listener.DeliveryItemListener;
 import com.delivery.model.DeliveryItem;
 import com.delivery.model.Result;
-import com.delivery.ui.details.LocationActivity;
+import com.delivery.ui.adapter.DeliverAdapter;
 import com.delivery.utils.AppConstants;
 import com.delivery.viewmodel.DeliveryItemViewModel;
 import com.delivery.viewmodel.DeliveryViewModel;
@@ -26,14 +27,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class DeliveryActivity extends AppCompatActivity implements DeliveryItemClickListener {
+public class DeliveryActivity extends AppCompatActivity implements DeliveryItemListener {
 
 
     private DeliverAdapter deliverAdapter;
     private DeliveryViewModel deliveryViewModel;
     private ActivityMainBinding activityBinding;
     private RecyclerView recyclerView;
-    private boolean loading=false;
+    private boolean loading = false;
 
 
     @Override
@@ -46,34 +47,30 @@ public class DeliveryActivity extends AppCompatActivity implements DeliveryItemC
         onLoadMore(0);
     }
 
-   private void setupDeliveryViewModelBindings() {
+    private void setupDeliveryViewModelBindings() {
         activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-       deliveryViewModel = ViewModelProviders.of(this).get(DeliveryViewModel.class);
+        deliveryViewModel = ViewModelProviders.of(this).get(DeliveryViewModel.class);
         activityBinding.setDeliveryViewModel(deliveryViewModel);
     }
-    
-
 
 
     private void setUpAdapter() {
         recyclerView = activityBinding.recyclerView;
-
         deliverAdapter = new DeliverAdapter(this);
         recyclerView.setAdapter(deliverAdapter);
         setScrollListener();
 
     }
 
-    private void setScrollListener()
-    {
-        int visibleThreshold=2;
+    private void setScrollListener() {
+        int visibleThreshold = 2;
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-               int totalItemCount = linearLayoutManager != null ? linearLayoutManager.getItemCount() : 0;
-                int  lastVisibleItem = linearLayoutManager != null ? linearLayoutManager.findLastVisibleItemPosition() : 0;
+                int totalItemCount = linearLayoutManager != null ? linearLayoutManager.getItemCount() : 0;
+                int lastVisibleItem = linearLayoutManager != null ? linearLayoutManager.findLastVisibleItemPosition() : 0;
 
                 if ((!loading && totalItemCount <= (lastVisibleItem + visibleThreshold))) {
                     loading = true;
@@ -96,14 +93,14 @@ public class DeliveryActivity extends AppCompatActivity implements DeliveryItemC
 
     @Override
     public void onDeliveryItemClick(DeliveryItem deliveryItem) {
-        Intent intent=new Intent(this, LocationActivity.class);
-        intent.putExtra(AppConstants.DELIVERY_ITEM_OBJECT,deliveryItem);
+        Intent intent = new Intent(this, LocationActivity.class);
+        intent.putExtra(AppConstants.DELIVERY_ITEM_OBJECT, deliveryItem);
         startActivity(intent);
     }
 
     @Override
     public DeliveryItemViewModel getDeliveryItemViewModel() {
-        return  ViewModelProviders.of(this).get(DeliveryItemViewModel.class);
+        return ViewModelProviders.of(this).get(DeliveryItemViewModel.class);
     }
 
 
@@ -136,8 +133,8 @@ public class DeliveryActivity extends AppCompatActivity implements DeliveryItemC
                     deliveryViewModel.emptyView.set(View.VISIBLE);
                 } else {
                     deliveryViewModel.emptyView.set(View.GONE);
-                    if(deliveryResult!=null)
-                    deliverAdapter.setItems(deliveryResult.getData());
+                    if (deliveryResult != null)
+                        deliverAdapter.setItems(deliveryResult.getData());
                     deliverAdapter.notifyDataSetChanged();
                     setLoading();
                 }

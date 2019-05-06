@@ -3,9 +3,7 @@ package com.delivery.viewmodel;
 
 import android.util.Log;
 import android.view.View;
-
 import androidx.annotation.NonNull;
-
 import com.delivery.App;
 import com.delivery.model.DeliveryItem;
 import com.delivery.model.Result;
@@ -26,6 +24,7 @@ public class DeliveryViewModel extends ViewModel {
 
     private final MutableLiveData<Result> deliveryResult;
     private final DeliveryService deliveryService;
+    @SuppressWarnings("WeakerAccess")
     public final ObservableInt progressBar;
     public final ObservableInt emptyView;
 
@@ -45,7 +44,6 @@ public class DeliveryViewModel extends ViewModel {
 
     public void loadDeliveriesNetwork(int offset) {
         progressBar.set(View.VISIBLE);
-        Log.d("offset value##",offset+"");
         Call<List<DeliveryItem>> deliveryItemCall = deliveryService.getDeliveryApi().
                 getAllDeliveryItems(offset, AppConstants.PAGE_LIMIT);
         deliveryItemCall.enqueue(new DeliveryCallback());

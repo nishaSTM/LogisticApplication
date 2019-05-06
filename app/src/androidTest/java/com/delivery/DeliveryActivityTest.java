@@ -4,7 +4,7 @@ package com.delivery;
 import android.content.Context;
 import android.content.Intent;
 
-import com.delivery.ui.main.DeliveryActivity;
+import com.delivery.ui.activity.DeliveryActivity;
 import com.delivery.utils.AppConstants;
 
 import static androidx.test.espresso.Espresso.onView;

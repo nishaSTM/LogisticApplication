@@ -39,7 +39,7 @@
                 android:layout_width="@dimen/width"
                 android:layout_height="@dimen/height"
                 android:contentDescription="@string/image"
-                app:imageUrl='@{locationViewModel.imageUrl}'
+                app:imageUrl='@{locationViewModel.image}'
                 tools:background="@color/black" />
 
             <TextView
@@ -50,10 +50,10 @@
                 android:layout_marginStart="@dimen/avg_margin"
                 android:layout_marginTop="@dimen/avg_margin"
                 android:layout_toEndOf="@id/image_location"
+                android:text="@{locationViewModel.description}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:textSize="@dimen/small_textsize"
                 android:transitionName="@string/desc"
-                android:text="@{locationViewModel.description}"
                 tools:text="@string/desc" />
 
 

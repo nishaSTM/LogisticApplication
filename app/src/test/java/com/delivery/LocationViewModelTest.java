@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.delivery.model.DeliveryItem;
 import com.delivery.viewmodel.LocationViewModel;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,7 +23,8 @@ public class LocationViewModelTest {
     public void setUp() {
         final DeliveryItem deliveryItem =
                 new DeliveryItem("desc", "image_url", "1", null);
-        locationViewModel = new LocationViewModel(deliveryItem);
+        locationViewModel = new LocationViewModel();
+        locationViewModel.setDeliveryItem(deliveryItem);
     }
 
     @Test

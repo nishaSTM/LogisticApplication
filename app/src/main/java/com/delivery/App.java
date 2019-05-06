@@ -8,18 +8,19 @@ public class App extends Application {
 
     private static App app;
     private static DeliveryService deliveryService;
+
     @Override
     public void onCreate() {
         super.onCreate();
         app = this;
-        deliveryService=new DeliveryService();
+        deliveryService = new DeliveryService();
     }
 
-    public static DeliveryService getDeliveryService()
-    {
+    public static DeliveryService getDeliveryService() {
 
-        return  deliveryService;
+        return deliveryService;
     }
+
     public static App getInstance() {
         return app;
     }

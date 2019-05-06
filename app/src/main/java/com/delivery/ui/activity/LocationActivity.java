@@ -1,4 +1,4 @@
-package com.delivery.ui.details;
+package com.delivery.ui.activity;
 
 
 import android.os.Bundle;
@@ -59,7 +59,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         ActivityLocationBinding activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_location);
         DeliveryItem deliveryItem = getIntent().getParcelableExtra(AppConstants.DELIVERY_ITEM_OBJECT);
         locationViewModel = ViewModelProviders.of(this).get(LocationViewModel.class);
-               // new LocationViewModel(deliveryItem);
         locationViewModel.setDeliveryItem(deliveryItem);
         activityBinding.setLocationViewModel(locationViewModel);
     }
