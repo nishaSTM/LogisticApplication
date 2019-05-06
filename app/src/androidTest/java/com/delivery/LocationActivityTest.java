@@ -1,14 +1,14 @@
 package com.delivery;
 
+import com.delivery.ui.details.LocationActivity;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.IsNot.not;
-
 import androidx.arch.core.executor.testing.CountingTaskExecutorRule;
 import androidx.test.rule.ActivityTestRule;
-import com.delivery.ui.activity.details.LocationActivity;
 import org.junit.Rule;
 import org.junit.Test;
 import java.util.concurrent.TimeUnit;
