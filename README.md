@@ -13,10 +13,6 @@ This is a logistic sample app to demonstrate data loading from webservice using 
 - Junit/Mockito for unit testing
 
 
-# How to Run
-1. Download or clone the repository.
-            git clone https://github.com/nishaSTM/LogisticApp.git
-2. Open Android studio -> File -> Open.
-3. Navigate to the folder where you have cloned/downloaded the repository.
-4. Replace the google_map_key string in google_map_api.xml file with your key.
-5. Compile and Run.
+# Things to Remember
+- Replace the google_map_key string in google_map_api.xml file with your key.
+
