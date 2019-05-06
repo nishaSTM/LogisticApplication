@@ -1,42 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.activity.main.DeliveryActivity">
+    >
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
+    <data>
 
-    <FrameLayout
-        android:id="@+id/emptyView"
-        android:layout_width="fill_parent"
+        <variable
+            name="deliveryViewModel"
+            type="com.delivery.ui.activity.main.DeliveryViewModel" />
+    </data>
 
-        android:layout_height="fill_parent"
-        android:visibility="gone">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        >
 
-        <Button
-            android:id="@+id/btn_retry"
+        <ProgressBar
+            android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/orange_button_selector"
-            android:padding="@dimen/min_padding"
-            android:text="@string/retry"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/medium_textSize" />
-    </FrameLayout>
+            android:visibility="@{deliveryViewModel.progressBar}" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <FrameLayout
+            android:id="@+id/emptyView"
+            android:layout_width="fill_parent"
+
+            android:layout_height="fill_parent"
+            android:visibility="@{deliveryViewModel.emptyView}">
+
+            <Button
+                android:id="@+id/btn_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/orange_button_selector"
+                android:onClick="@{deliveryViewModel::onClickRetryButton}"
+                android:padding="@dimen/min_padding"
+                android:text="@string/retry"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/medium_textSize" />
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

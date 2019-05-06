@@ -1,50 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.activity.details.LocationActivity">
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/description_layout"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/zero_dp" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="locationViewModel"
+            type="com.delivery.ui.activity.details.LocationViewModel" />
+    </data>
 
     <RelativeLayout
-        android:id="@+id/description_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/small_padding"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.details.LocationActivity">
 
-        <ImageView
-            android:id="@+id/image_location"
-            android:layout_width="@dimen/width"
-            android:layout_height="@dimen/height"
-            android:contentDescription="@string/image"
-            tools:background="@color/black" />
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/description_layout"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/zero_dp" />
 
-        <TextView
-            android:id="@+id/desc_location"
+
+        <RelativeLayout
+            android:id="@+id/description_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/avg_margin"
-            android:layout_marginStart="@dimen/avg_margin"
-            android:layout_toEndOf="@id/image_location"
-            android:layout_centerVertical="true"
-            android:textAppearance="?attr/textAppearanceListItem"
-            android:textSize="@dimen/small_textsize"
-            android:transitionName="@string/desc"
-            tools:text="@string/desc"/>
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:padding="@dimen/small_padding">
+
+            <ImageView
+                android:id="@+id/image_location"
+                android:layout_width="@dimen/width"
+                android:layout_height="@dimen/height"
+                android:contentDescription="@string/image"
+                app:imageUrl='@{locationViewModel.imageUrl}'
+                tools:background="@color/black" />
+
+            <TextView
+                android:id="@+id/desc_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/avg_margin"
+                android:layout_marginTop="@dimen/avg_margin"
+                android:layout_toEndOf="@id/image_location"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textSize="@dimen/small_textsize"
+                android:transitionName="@string/desc"
+                android:text="@{locationViewModel.description}"
+                tools:text="@string/desc" />
 
 
+        </RelativeLayout>
 
     </RelativeLayout>
-
-</RelativeLayout>
+</layout>

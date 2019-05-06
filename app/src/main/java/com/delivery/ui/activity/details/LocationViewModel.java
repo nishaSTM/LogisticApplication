@@ -1,26 +1,34 @@
 package com.delivery.ui.activity.details;
 
 
-import android.content.Intent;
-
-import androidx.annotation.NonNull;
-
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
 import com.delivery.model.DeliveryItemResponseModel;
-import com.delivery.utils.AppConstants;
-import androidx.lifecycle.MutableLiveData;
+import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.ViewModel;
 
-
 public class LocationViewModel extends ViewModel {
-
-    private final MutableLiveData<DeliveryItemResponseModel> deliveryItemMutableLiveData = new MutableLiveData<>();
-
-    public void loadDeliverableItemData(@NonNull Intent intent) {
-        DeliveryItemResponseModel deliveryItemExtra = intent.getParcelableExtra(AppConstants.DELIVERY_ITEM_OBJECT);
-        deliveryItemMutableLiveData.postValue(deliveryItemExtra);
+    private final DeliveryItemResponseModel deliveryItemResponseModel;
+    public LocationViewModel(DeliveryItemResponseModel deliveryItemResponseModel) {
+        this.deliveryItemResponseModel=deliveryItemResponseModel;
     }
 
-    public MutableLiveData<DeliveryItemResponseModel> getDeliveryItemMutableLiveData() {
-        return deliveryItemMutableLiveData;
+    public DeliveryItemResponseModel getDeliveryItemResponseModel() {
+        return deliveryItemResponseModel;
     }
+
+    @SuppressWarnings("unused")
+    @BindingAdapter("imageUrl")
+    public static void loadImage(ImageView view, String imageUrl) {
+        Glide.with(view.getContext()).load(imageUrl).into(view);
+    }
+
+    public String getImageUrl()
+    {
+        return deliveryItemResponseModel.imageUrl;
+    }
+    public String getDescription() {
+        return deliveryItemResponseModel.description;
+    }
+
 }

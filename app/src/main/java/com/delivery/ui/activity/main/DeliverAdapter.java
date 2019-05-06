@@ -4,23 +4,15 @@ package com.delivery.ui.activity.main;
 import androidx.annotation.NonNull;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.delivery.R;
+import com.delivery.databinding.ItemDeliveryBinding;
 import com.delivery.model.DeliveryItemResponseModel;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 
 public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHolder> {
     private int totalItemCount;
@@ -28,14 +20,10 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
     private int visibleThreshold;
     private boolean loading = false;
     private List<DeliveryItemResponseModel> mItems;
-    private final OnDeliveryAdapter mListener;
-    public interface OnDeliveryAdapter {
-        void onDeliveryItemClicked(DeliveryItemResponseModel deliveryItemResponseModel);
-    }
 
 
-    public DeliverAdapter(OnDeliveryAdapter listener, RecyclerView currentRecyclerView, final DeliveryActivity context) {
-        mListener = listener;
+
+    public DeliverAdapter(RecyclerView currentRecyclerView, final DeliveryActivity context) {
         mItems = new ArrayList<>();
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) currentRecyclerView.getLayoutManager();
         currentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -47,10 +35,7 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
 
                 if ((!loading && totalItemCount <= (lastVisibleItem + visibleThreshold))) {
                     context.onLoadMore(totalItemCount);
-
                     loading = true;
-
-
                 }
             }
         });
@@ -70,16 +55,14 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_delivery, parent, false);
-        return new ViewHolder(view);
+        ItemDeliveryBinding itemDeliveryBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_delivery,
+                        parent, false);
+        return new ViewHolder(itemDeliveryBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        DeliveryItemResponseModel deliveryItemResponseModel = getItem(position);
-        holder.setOnClickListener(deliveryItemResponseModel);
-        holder.setImage(deliveryItemResponseModel.getImage());
-        holder.setDescription(deliveryItemResponseModel.getDescription() + " " + deliveryItemResponseModel.getLocation().getAddress());
+       holder.bindDeliveryItem(getItem(position));
     }
 
     @Override
@@ -91,36 +74,22 @@ public class DeliverAdapter extends RecyclerView.Adapter<DeliverAdapter.ViewHold
         return mItems.get(position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
-        @BindView(R.id.image)
-        ImageView image;
-
-        @BindView(R.id.desc)
-        TextView desc;
-
-        private ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        private final ItemDeliveryBinding itemDeliveryBinding;
+        private ViewHolder(ItemDeliveryBinding itemDeliveryBinding) {
+            super(itemDeliveryBinding.getRoot());
+            this.itemDeliveryBinding=itemDeliveryBinding;
         }
 
-
-        private void setImage(String imageUrl) {
-            Glide.with(itemView.getContext()).load(imageUrl).into(image);
-        }
-
-        private void setDescription(String description) {
-            desc.setText(description);
-        }
-
-        private void setOnClickListener(DeliveryItemResponseModel deliveryItemResponseModel) {
-            itemView.setTag(deliveryItemResponseModel);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            mListener.onDeliveryItemClicked((DeliveryItemResponseModel) view.getTag());
+        void bindDeliveryItem(DeliveryItemResponseModel deliveryItemResponseModel) {
+            if (itemDeliveryBinding.getDeliveryItemViewModel() == null) {
+                itemDeliveryBinding.setDeliveryItemViewModel(
+                        new DeliveryItemViewModel(deliveryItemResponseModel));
+            } else {
+                itemDeliveryBinding.setDeliveryItemViewModel(itemDeliveryBinding.getDeliveryItemViewModel());
+            }
+            itemDeliveryBinding.executePendingBindings();
         }
     }
 }

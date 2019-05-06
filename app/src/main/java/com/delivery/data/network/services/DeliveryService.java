@@ -2,25 +2,16 @@ package com.delivery.data.network.services;
 
 
 import com.delivery.App;
-
-import com.delivery.model.DeliveryItemResponseModel;
 import com.delivery.utils.AppConstants;
 import com.delivery.utils.InternetUtil;
 import com.google.gson.Gson;
-
-
 import java.io.File;
-import java.util.List;
-
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 public class DeliveryService {
     private static final String URL = AppConstants.BASE_URL;
@@ -84,13 +75,6 @@ public class DeliveryService {
     public DeliveryApi getDeliveryApi() {
         return mDeliveryApi;
     }
-
-    public interface DeliveryApi {
-        @GET("deliveries/")
-        Call<List<DeliveryItemResponseModel>> getAllDeliveryItems(@Query("offset") Integer offset,
-                                                                  @Query("limit") Integer limit);
-    }
-
 }
 
 

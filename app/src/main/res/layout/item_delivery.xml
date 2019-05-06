@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="deliveryItemViewModel"
+            type="com.delivery.ui.activity.main.DeliveryItemViewModel" />
+    </data>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,6 +19,7 @@
     android:foreground="?attr/selectableItemBackground"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:onClick="@{deliveryItemViewModel::onItemClick}"
     android:transitionName="parent_view"
     tools:ignore="UnusedAttribute">
 
@@ -20,6 +29,7 @@
         android:layout_height="@dimen/medium_size_image"
         android:layout_marginTop="@dimen/medium_margin"
         android:contentDescription="@string/image"
+        app:imageUrl='@{deliveryItemViewModel.imageUrl}'
         android:transitionName="image"/>
 
     <TextView
@@ -32,7 +42,8 @@
         android:layout_centerVertical="true"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textSize="@dimen/small_textsize"
+        android:text="@{deliveryItemViewModel.description}"
         android:transitionName="@string/desc"
         tools:text="@string/desc"/>
 </RelativeLayout>
-
+</layout>

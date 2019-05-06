@@ -5,10 +5,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class DeliveryItemResponseModel implements Parcelable {
-    private String description;
-    private String imageUrl;
-    private String id;
-    private LocationCoordinatesResponseModel location;
+    public String description;
+    public String imageUrl;
+    public String id;
+    public LocationCoordinatesResponseModel location;
 
     public DeliveryItemResponseModel(String description, String imageUrl, String id, LocationCoordinatesResponseModel location) {
         this.description = description;

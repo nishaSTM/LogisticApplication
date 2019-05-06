@@ -1,5 +1,6 @@
 package com.delivery;
 
+import com.delivery.data.network.services.DeliveryApi;
 import com.delivery.model.DeliveryItemResponseModel;
 import com.delivery.model.Result;
 import com.delivery.data.network.services.DeliveryService;
@@ -38,7 +39,7 @@ public class DeliveryTest {
     DeliveryService deliveryService;
 
     @Mock
-    DeliveryService.DeliveryApi deliveryApi;
+    DeliveryApi deliveryApi;
 
     @Mock
     private Call<List<DeliveryItemResponseModel>> mockedCall;
@@ -47,7 +48,7 @@ public class DeliveryTest {
 
     @Before
     public void setUp() {
-        viewModel = new DeliveryViewModel(deliveryService);
+        viewModel = new DeliveryViewModel();
     }
 
 
@@ -64,7 +65,6 @@ public class DeliveryTest {
         Mockito.when(deliveryApi.getAllDeliveryItems(0, AppConstants.LIMIT)).thenReturn(mockedCall);
         Mockito.when(deliveryService.getDeliveryApi()).thenReturn(deliveryApi);
         viewModel.loadDeliveriesNetwork(0);
-        // List<DeliveryItemResponseModel> abc=new ArrayList();
         try {
             TestObserver.test(viewModel.getDeliveryList()).awaitValue().assertHasValue().
                     map(Result::getData)
