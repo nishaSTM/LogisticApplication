@@ -27,7 +27,7 @@ public class DeliveryItemViewModel extends ViewModel {
     }
 
     public String getDescription() {
-        return deliveryItem.getId() + deliveryItem.getDescription();
+        return deliveryItem.getDescription();
     }
 
     public void setDeliveryItem(DeliveryItem deliveryItem) {
