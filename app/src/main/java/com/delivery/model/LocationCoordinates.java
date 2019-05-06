@@ -4,7 +4,7 @@ package com.delivery.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class LocationCoordinatesResponseModel implements Parcelable {
+public class LocationCoordinates implements Parcelable {
     private float lat;
     private float lng;
     private String address;
@@ -33,7 +33,7 @@ public class LocationCoordinatesResponseModel implements Parcelable {
         this.address = address;
     }
 
-    private LocationCoordinatesResponseModel(Parcel in) {
+    private LocationCoordinates(Parcel in) {
         lat = in.readFloat();
         lng = in.readFloat();
         address = in.readString();
@@ -51,15 +51,15 @@ public class LocationCoordinatesResponseModel implements Parcelable {
         dest.writeString(address);
     }
 
-    public static final Parcelable.Creator<LocationCoordinatesResponseModel> CREATOR = new Parcelable.Creator<LocationCoordinatesResponseModel>() {
+    public static final Parcelable.Creator<LocationCoordinates> CREATOR = new Parcelable.Creator<LocationCoordinates>() {
         @Override
-        public LocationCoordinatesResponseModel createFromParcel(Parcel in) {
-            return new LocationCoordinatesResponseModel(in);
+        public LocationCoordinates createFromParcel(Parcel in) {
+            return new LocationCoordinates(in);
         }
 
         @Override
-        public LocationCoordinatesResponseModel[] newArray(int size) {
-            return new LocationCoordinatesResponseModel[size];
+        public LocationCoordinates[] newArray(int size) {
+            return new LocationCoordinates[size];
         }
     };
 }

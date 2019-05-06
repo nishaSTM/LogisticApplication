@@ -7,7 +7,7 @@
 
         <variable
             name="deliveryViewModel"
-            type="com.delivery.ui.activity.main.DeliveryViewModel" />
+            type="com.delivery.viewmodel.DeliveryViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

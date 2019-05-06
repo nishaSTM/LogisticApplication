@@ -11,7 +11,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner 'io.appflate.restmock.android.RESTMockTestRunner'
-        multiDexEnabled true
     }
 
     testOptions {
@@ -31,10 +30,12 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String","BASE_URL","\"https://mock-api-mobile.dev.lalamove.com\"")
         }
         debug {
             minifyEnabled false
             proguardFiles 'proguard-rules.pro'
+            buildConfigField("String","BASE_URL","\"https://mock-api-mobile.dev.lalamove.com\"")
         }
     }
 

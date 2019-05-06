@@ -1,8 +1,8 @@
-package com.delivery.data.network.services;
+package com.delivery.network;
 
 
 import com.delivery.App;
-import com.delivery.utils.AppConstants;
+import com.delivery.BuildConfig;
 import com.delivery.utils.InternetUtil;
 import com.google.gson.Gson;
 import java.io.File;
@@ -14,19 +14,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DeliveryService {
-    private static final String URL = AppConstants.BASE_URL;
-    private DeliveryApi mDeliveryApi;
-    private static DeliveryService instance;
+    private DeliveryApi deliveryApi;
 
-    public static DeliveryService getInstance() {
-        if (instance == null) {
-            instance = new DeliveryService();
-
-        }
-        return instance;
-    }
-
-    private DeliveryService() {
+    public DeliveryService() {
         setupRetrofitAndOkHttpMethod(App.getInstance().getCacheDir());
     }
 
@@ -65,15 +55,15 @@ public class DeliveryService {
                 .build();
 
         Retrofit mRetrofit = new Retrofit.Builder()
-                .baseUrl(URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .build();
-        mDeliveryApi = mRetrofit.create(DeliveryApi.class);
+        deliveryApi = mRetrofit.create(DeliveryApi.class);
     }
 
     public DeliveryApi getDeliveryApi() {
-        return mDeliveryApi;
+        return deliveryApi;
     }
 }
 

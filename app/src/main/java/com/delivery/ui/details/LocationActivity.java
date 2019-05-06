@@ -1,13 +1,14 @@
-package com.delivery.ui.activity.details;
+package com.delivery.ui.details;
 
 
 import android.os.Bundle;
 
 import com.delivery.R;
 import com.delivery.databinding.ActivityLocationBinding;
-import com.delivery.model.DeliveryItemResponseModel;
-import com.delivery.model.LocationCoordinatesResponseModel;
+import com.delivery.model.DeliveryItem;
+import com.delivery.model.LocationCoordinates;
 import com.delivery.utils.AppConstants;
+import com.delivery.viewmodel.LocationViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,10 +19,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProviders;
 
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback, LifecycleOwner {
 
-    private LocationViewModel viewModel;
+    private LocationViewModel locationViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +37,12 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
-    private void setupBindings() {
-        ActivityLocationBinding activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_location);
-        DeliveryItemResponseModel deliveryItemResponseModel = getIntent().getParcelableExtra(AppConstants.DELIVERY_ITEM_OBJECT);
-        viewModel = new LocationViewModel(deliveryItemResponseModel);
-        activityBinding.setLocationViewModel(viewModel);
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        DeliveryItemResponseModel deliveryObject = viewModel.getDeliveryItemResponseModel();
-        LocationCoordinatesResponseModel location = null;
-        if (deliveryObject != null)
-            location = deliveryObject.getLocation();
+        DeliveryItem deliveryItemObject = locationViewModel.getDeliveryItem();
+        LocationCoordinates location = null;
+        if (deliveryItemObject != null)
+            location = deliveryItemObject.getLocation();
         if (location != null) {
             LatLng loc = new LatLng(location.getLat(), location.getLng());
 
@@ -58,6 +53,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
             CameraUpdateFactory.zoomTo(12.0f);
         }
+    }
+
+    private void setupBindings() {
+        ActivityLocationBinding activityBinding = DataBindingUtil.setContentView(this, R.layout.activity_location);
+        DeliveryItem deliveryItem = getIntent().getParcelableExtra(AppConstants.DELIVERY_ITEM_OBJECT);
+        locationViewModel = ViewModelProviders.of(this).get(LocationViewModel.class);
+               // new LocationViewModel(deliveryItem);
+        locationViewModel.setDeliveryItem(deliveryItem);
+        activityBinding.setLocationViewModel(locationViewModel);
     }
 
 

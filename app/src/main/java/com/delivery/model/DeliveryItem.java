@@ -4,20 +4,17 @@ package com.delivery.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class DeliveryItemResponseModel implements Parcelable {
-    public String description;
-    public String imageUrl;
-    public String id;
-    public LocationCoordinatesResponseModel location;
+public class DeliveryItem implements Parcelable {
+    private String description;
+    private String imageUrl;
+    private String id;
+    private LocationCoordinates location;
 
-    public DeliveryItemResponseModel(String description, String imageUrl, String id, LocationCoordinatesResponseModel location) {
+    public DeliveryItem(String description, String imageUrl, String id, LocationCoordinates location) {
         this.description = description;
         this.imageUrl = imageUrl;
         this.id = id;
         this.location = location;
-    }
-
-    public DeliveryItemResponseModel() {
     }
 
     public String getDescription() {
@@ -45,19 +42,19 @@ public class DeliveryItemResponseModel implements Parcelable {
         this.id = id;
     }
 
-    public LocationCoordinatesResponseModel getLocation() {
+    public LocationCoordinates getLocation() {
         return location;
     }
 
-    public void setLocation(LocationCoordinatesResponseModel location) {
+    public void setLocation(LocationCoordinates location) {
         this.location = location;
     }
 
-    private DeliveryItemResponseModel(Parcel in) {
+    private DeliveryItem(Parcel in) {
         description = in.readString();
         imageUrl = in.readString();
         id = in.readString();
-        location = (LocationCoordinatesResponseModel) in.readValue(LocationCoordinatesResponseModel.class.getClassLoader());
+        location = (LocationCoordinates) in.readValue(LocationCoordinates.class.getClassLoader());
     }
 
     @Override
@@ -74,15 +71,15 @@ public class DeliveryItemResponseModel implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<DeliveryItemResponseModel> CREATOR = new Parcelable.Creator<DeliveryItemResponseModel>() {
+    public static final Parcelable.Creator<DeliveryItem> CREATOR = new Parcelable.Creator<DeliveryItem>() {
         @Override
-        public DeliveryItemResponseModel createFromParcel(Parcel in) {
-            return new DeliveryItemResponseModel(in);
+        public DeliveryItem createFromParcel(Parcel in) {
+            return new DeliveryItem(in);
         }
 
         @Override
-        public DeliveryItemResponseModel[] newArray(int size) {
-            return new DeliveryItemResponseModel[size];
+        public DeliveryItem[] newArray(int size) {
+            return new DeliveryItem[size];
         }
     };
 }

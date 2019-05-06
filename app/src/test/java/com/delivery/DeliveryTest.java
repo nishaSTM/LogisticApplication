@@ -1,11 +1,11 @@
 package com.delivery;
 
-import com.delivery.data.network.services.DeliveryApi;
-import com.delivery.model.DeliveryItemResponseModel;
+import com.delivery.model.DeliveryItem;
 import com.delivery.model.Result;
-import com.delivery.data.network.services.DeliveryService;
 
-import com.delivery.ui.activity.main.DeliveryViewModel;
+import com.delivery.network.DeliveryApi;
+import com.delivery.network.DeliveryService;
+import com.delivery.viewmodel.DeliveryViewModel;
 import com.delivery.utils.AppConstants;
 import com.jraska.livedata.TestObserver;
 
@@ -33,7 +33,7 @@ public class DeliveryTest {
     @Rule
     public InstantTaskExecutorRule testRule = new InstantTaskExecutorRule();
 
-    private DeliveryViewModel viewModel;
+    private DeliveryViewModel deliveryViewModel;
 
     @Mock
     DeliveryService deliveryService;
@@ -42,57 +42,52 @@ public class DeliveryTest {
     DeliveryApi deliveryApi;
 
     @Mock
-    private Call<List<DeliveryItemResponseModel>> mockedCall;
+    private Call<List<DeliveryItem>> deliveryItemList;
 
     private Throwable throwable;
 
     @Before
     public void setUp() {
-        viewModel = new DeliveryViewModel();
+        deliveryViewModel = new DeliveryViewModel();
     }
 
 
-    @Test
-    public void testDeliveryViewModelResponseSuccess() {
-        List<DeliveryItemResponseModel> list = new ArrayList<>();
-        DeliveryItemResponseModel itemResponseModel = new DeliveryItemResponseModel("desc", "imagUrl", "id", null);
+    @Test(expected = InterruptedException.class)
+    public void testDeliveryViewModelResponseSuccess() throws InterruptedException {
+        List<DeliveryItem> list = new ArrayList<>();
+        DeliveryItem itemResponseModel = new DeliveryItem("desc", "imagUrl", "id", null);
         list.add(itemResponseModel);
         Mockito.doAnswer(invocation -> {
-            Callback<List<DeliveryItemResponseModel>> call = invocation.getArgument(0);
-            call.onResponse(mockedCall, Response.success(list));
+            Callback<List<DeliveryItem>> call = invocation.getArgument(0);
+            call.onResponse(deliveryItemList, Response.success(list));
             return null;
-        }).when(mockedCall).enqueue(Mockito.any());
-        Mockito.when(deliveryApi.getAllDeliveryItems(0, AppConstants.LIMIT)).thenReturn(mockedCall);
+        }).when(deliveryItemList).enqueue(Mockito.any());
+        Mockito.when(deliveryApi.getAllDeliveryItems(0, AppConstants.PAGE_LIMIT)).thenReturn(deliveryItemList);
         Mockito.when(deliveryService.getDeliveryApi()).thenReturn(deliveryApi);
-        viewModel.loadDeliveriesNetwork(0);
-        try {
-            TestObserver.test(viewModel.getDeliveryList()).awaitValue().assertHasValue().
-                    map(Result::getData)
-                    .assertValue(list);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        deliveryViewModel.loadDeliveriesNetwork(0);
+
+        TestObserver.test(deliveryViewModel.getDeliveryList()).awaitValue().assertHasValue().
+                map(Result::getData)
+                .assertValue(list);
+
 
     }
 
-    @Test
-    public void testDeliveryViewModelResponseFailure() {
+    @Test(expected = InterruptedException.class)
+    public void testDeliveryViewModelResponseFailure() throws InterruptedException {
         Mockito.doAnswer(invocation -> {
-            Callback<List<DeliveryItemResponseModel>> call = invocation.getArgument(0);
+            Callback<List<DeliveryItem>> call = invocation.getArgument(0);
             throwable = new Throwable("Bad Request");
-            call.onFailure(mockedCall, throwable);
+            call.onFailure(deliveryItemList, throwable);
             return null;
-        }).when(mockedCall).enqueue(Mockito.any());
-        Mockito.when(deliveryApi.getAllDeliveryItems(0, AppConstants.LIMIT)).thenReturn(mockedCall);
+        }).when(deliveryItemList).enqueue(Mockito.any());
+        Mockito.when(deliveryApi.getAllDeliveryItems(0, AppConstants.PAGE_LIMIT)).thenReturn(deliveryItemList);
         Mockito.when(deliveryService.getDeliveryApi()).thenReturn(deliveryApi);
-        viewModel.loadDeliveriesNetwork(0);
-        try {
-            TestObserver.test(viewModel.getDeliveryList()).awaitValue().
-                    map(Result::getError).
-                    assertValue(throwable.getMessage());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        deliveryViewModel.loadDeliveriesNetwork(0);
+
+        TestObserver.test(deliveryViewModel.getDeliveryList()).awaitValue().
+                map(Result::getError).
+                assertValue(throwable.getMessage());
 
     }
 }

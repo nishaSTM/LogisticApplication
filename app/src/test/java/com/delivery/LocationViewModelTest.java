@@ -2,9 +2,8 @@ package com.delivery;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
-import com.delivery.model.DeliveryItemResponseModel;
-import com.delivery.ui.activity.details.LocationViewModel;
-
+import com.delivery.model.DeliveryItem;
+import com.delivery.viewmodel.LocationViewModel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,26 +16,19 @@ public class LocationViewModelTest {
 
     @Rule
     public InstantTaskExecutorRule testRule = new InstantTaskExecutorRule();
-
-
-    LocationViewModel locationViewModel;
+    private LocationViewModel locationViewModel;
 
     @Before
     public void setUp() {
-        final DeliveryItemResponseModel deliveryItemResponseModel =
-                new DeliveryItemResponseModel("desc", "image_url", "1", null);
-
-        locationViewModel = new LocationViewModel(deliveryItemResponseModel);
-
+        final DeliveryItem deliveryItem =
+                new DeliveryItem("desc", "image_url", "1", null);
+        locationViewModel = new LocationViewModel(deliveryItem);
     }
 
     @Test
     public void intentDataAssertion() {
 
-        DeliveryItemResponseModel deliveryItemResponseModel = locationViewModel.getDeliveryItemResponseModel();
-        Assert.assertNotNull(deliveryItemResponseModel);
-
+        DeliveryItem deliveryItem = locationViewModel.getDeliveryItem();
+        Assert.assertNotNull(deliveryItem);
     }
-
-
 }

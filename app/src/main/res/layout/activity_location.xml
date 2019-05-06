@@ -8,7 +8,7 @@
 
         <variable
             name="locationViewModel"
-            type="com.delivery.ui.activity.details.LocationViewModel" />
+            type="com.delivery.viewmodel.LocationViewModel" />
     </data>
 
     <RelativeLayout

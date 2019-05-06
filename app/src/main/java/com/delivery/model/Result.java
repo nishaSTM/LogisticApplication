@@ -7,10 +7,10 @@ public class Result {
     public enum STATUS {SUCCESS, ERROR}
 
     private STATUS status;
-    private List<DeliveryItemResponseModel> data;
+    private List<DeliveryItem> data;
     private String error;
 
-    public Result(STATUS status, List<DeliveryItemResponseModel> data, String error) {
+    public Result(STATUS status, List<DeliveryItem> data, String error) {
         this.status = status;
         this.data = data;
         this.error = error;
@@ -24,11 +24,11 @@ public class Result {
         this.status = status;
     }
 
-    public List<DeliveryItemResponseModel> getData() {
+    public List<DeliveryItem> getData() {
         return data;
     }
 
-    public void setData(List<DeliveryItemResponseModel> data) {
+    public void setData(List<DeliveryItem> data) {
         this.data = data;
     }
 
